@@ -1,66 +1,44 @@
+# Assignment 3: Particle Filter Implementation for Forklift Localization
 
-# Implementazione di un Particle Filter per la Localizzazione di un Carrello Elevatore
+This project implements a **Particle Filter** for forklift localization using LiDAR data and landmark references. The goal is to develop a filter that precisely estimates the vehicle's position during the simulation and analyzes the effect of various parameters on its performance.
 
-## Descrizione del Progetto
+## Project Structure
+The implementation includes:
+- **`src/particle_filter/src/particle_filter.cpp`**: Core implementation of the Particle Filter with prediction, weight update, and resampling functions.
+- **`src/particle_filter/src/main.cpp`**: Main driver script that runs the filter with LiDAR input data.
+- **`assignment3.pdf`**: Detailed technical report containing experimental analysis, parameter tuning results, and performance evaluation.
 
-In questo progetto, è stato implementato un Particle Filter per la localizzazione di un carrello elevatore utilizzando dati LiDAR e landmark come riferimento. L’obiettivo è sviluppare un filtro in grado di stimare con precisione la posizione del veicolo durante l’intera simulazione, analizzando l’effetto di diversi parametri sul suo comportamento.
+## Building and Running
 
-## Struttura del Progetto
+### Prerequisites
+- **OS**: Ubuntu 18.04/20.04
+- **Framework**: ROS (Robot Operating System) - Melodic/Noetic
+- **Tools**: `rosbag` for data playback
 
-Il progetto contiene i seguenti file, che son stati modificati e creati per l'assignment:
-- **src/particle_filter/src/particle_filter.cpp**: Implementazione del Particle Filter con tutte le funzioni necessarie.
-- **src/particle_filter/src/main.cpp**: File principale che esegue il filtro utilizzando i dati di input.
-- **assignment3.pdf**: Report dettagliato del progetto, contenente l’analisi e i risultati degli esperimenti.
-- **README.md**: Questo file, contenente la descrizione del progetto e le istruzioni.
+### Compilation
+1. Navigate to the project root directory.
+2. Source ROS setup:
+   ```bash
+   source /opt/ros/<distro>/setup.bash
+   ```
+3. Compile the project:
+   ```bash
+   catkin_make
+   ```
 
-## Istruzioni per l’Esecuzione
+### Execution
+1. Start ROS Core in a separate terminal:
+   ```bash
+   roscore
+   ```
+2. Launch the particle node:
+   ```bash
+   ./devel/lib/particle/particle_node
+   ```
+3. In another terminal, play the rosbag:
+   ```bash
+   rosbag play --clock --hz=10 out.bag
+   ```
 
-Per eseguire il progetto, seguire i seguenti passaggi:
-
-### 1. Prerequisiti
-- Sistema operativo Ubuntu 18.04 o 20.04.
-- ROS (Robot Operating System) installato e configurato.
-- ROS package `rosbag` per la riproduzione dei dati.
-- Eseguire `source /opt/ros/melodic/setup.sh` in ogni terminale che si andrà ad aprire.
-- Scaricare il file `out.bag`
-
-### 2. Compilazione del Codice
-- Posizionarsi nella cartella root del progetto.
-- Eseguire il comando `catkin_make` per compilare il progetto.
-
-### 3. Esecuzione
-- Avviare ROS eseguendo, in un terminale separato:
-  ```bash
-  roscore
-  ```
-- Lanciare il nodo ROS eseguendo:
-  ```bash
-  ./devel/lib/particle/particle_node
-  ```
-- In un altro terminale, riprodurre il rosbag con i dati utilizzando:
-  ```bash
-  rosbag play --clock --hz=10 out.bag
-  ```
-  
-## Esperimenti e Risultati
-
-Sono stati eseguiti tre esperimenti variando il numero di particelle e i parametri di rumore, per osservare l’effetto su precisione e stabilità del filtro. I risultati dettagliati, inclusi i grafici e le analisi, sono disponibili nel report **assignment3.pdf**.
-
----
-
-## Nota al Professore
-
-Gentile Professore,
-
-Desidero informarla che ho caricato il progetto con un leggero ritardo rispetto alla scadenza prevista. Ho incontrato diverse difficoltà nel configurare l’ambiente ROS a causa del mio sistema operativo (macOS) e dell’architettura Apple Silicon (ARM). 
-
-Inizialmente, ho provato a utilizzare ROS tramite Docker su Ubuntu 18, forwardando la GUI con XQuartz, ma senza successo. Successivamente, ho tentato con una macchina virtuale, installando Ubuntu 18 Server e aggiungendo manualmente l’ambiente desktop, ma anche questa soluzione non ha funzionato. 
-
-Infine, ho dovuto utilizzare un PC con architettura x86, dove sono riuscito a installare Ubuntu e avviare ROS. Tuttavia, queste difficoltà tecniche mi hanno sottratto tempo prezioso, riducendo quello disponibile per lavorare sul codice.
-
-Attualmente, il codice è funzionante e sono riuscito a completare tutti i punti richiesti, inclusi gli esperimenti con le varie configurazioni.
-
-Mi scuso per il ritardo nella consegna e spero che possa tenerne conto.
-
-Cordiali saluti,  
-**Francesco Caligiuri**
+## Experiments and Results
+Multiple experiments were conducted by varying the number of particles and noise parameters. These experiments analyzed precision vs. stability tradeoffs. Detailed charts, plots, and analytical results are available in the **`assignment3.pdf`** report.

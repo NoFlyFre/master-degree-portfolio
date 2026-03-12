@@ -1,166 +1,54 @@
-# README
+# Assignment 1: Euclidean Clustering for Object Detection
 
-## Assignment #1: Rilevamento di oggetti mediante clustering euclideo
+This directory contains the implementation of a Euclidean Clustering pipeline utilizing the **Point Cloud Library (PCL)** to segment and detect cars and pedestrians in a LiDAR point cloud dataset.
 
-### Anno Accademico: 2024/2025
+## Introduction
+The goal of this assignment is to develop an efficient object detection system that can:
+1. **Implement Euclidean Clustering** as taught in the course.
+2. **Pre-process Data**: Downsample and crop the raw LiDAR points.
+3. **Segment Ground Plane**: Utilize RANSAC to remove the road surface.
+4. **Detect Objects**: Group remaining points into distinct clusters.
 
-### Studente: Francesco Caligiuri
+## Implementation Details
 
-### Matricola: 146666
+### 1. Data Pre-processing
+- **Downsampling**: Used the `VoxelGrid` filter to reduce point cloud density (Voxel size: `0.1f`).
+- **Cropping**: Applied a `CropBox` filter to focus on the Region of Interest (ROI) in front of the ego vehicle (Min: `-20, -6, -2`, Max: `30, 7, 5`).
 
----
+### 2. Ground Plane Segmentation
+- **RANSAC Plane Segmentation**: Implemented RANSAC to segment the road plane with a distance threshold of `0.2`.
+- **Inlier/Outlier Extraction**: Extracted points belonging to the ground (inliers) and potential objects (outliers) using `ExtractIndices`.
 
-## Introduzione
+### 3. Euclidean Clustering
+- **Parameter Optimization**: Finetuned parameters on Dataset 2 (higher complexity) and validated them on Dataset 1.
+- **PCL Implementation**: Configured `EuclideanClusterExtraction` with:
+    - **Cluster Tolerance**: `0.2`
+    - **Min Cluster Size**: `50`
+    - **Max Cluster Size**: `25000`
+- **Custom Clustering (Optional)**: Implemented `proximity` and `euclideanCluster` functions from scratch to verify the underlying algorithm. This can be toggled via the `USE_PCL_LIBRARY` flag.
 
-L’obiettivo di questo assignment è implementare un programma di clustering euclideo utilizzando la libreria PCL per segmentare e rilevare auto e pedoni presenti sulla strada. Il programma deve:
+### 4. Visualization and Rendering
+- **Distance Calculation**: For each cluster, the distance relative to the ego vehicle is calculated using its centroid.
+- **Color Coding**: Each cluster is rendered in a different color. Vehicles detected within 5 meters of the ego vehicle are highlighted with a **red bounding box**.
+- **On-Screen Display**: Distances are rendered directly in the 3D scene and printed to the console.
 
-1. **Implementare il clustering euclideo** come studiato durante le lezioni.
-2. **Assegnamento opzionale**: Implementare l’algoritmo che esegue il clustering euclideo utilizzando le funzioni `proximity` ed `euclideanCluster`, visualizzare la distanza di ogni cluster rispetto al veicolo ego, colorare in rosso i veicoli che sono sia davanti che a 5 metri di distanza dal veicolo ego e testare l’approccio sul dataset 2.
-3. **Far funzionare la soluzione sul dataset 2**.
+## Building and Running
 
----
+### Prerequisites
+- **OS**: macOS / Linux
+- **Dependencies**: PCL (Point Cloud Library), Boost, CMake
 
-## Dettagli dell’Implementazione
+### Compilation
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
 
-### 1. Pre-elaborazione dei Dati
-
-- **Downsampling**: Ho utilizzato il filtro `VoxelGrid` per ridurre la densità della nuvola di punti, impostando una dimensione del voxel di `0.1f` per le tre dimensioni. Questo migliora le prestazioni riducendo il numero di punti da elaborare.
-
-- **Cropping**: Ho applicato un filtro `CropBox` per limitare l’area di interesse della nuvola di punti, utilizzando i seguenti limiti:
-
-  - Min: `(-20, -6, -2)`
-  - Max: `(30, 7, 5)`
-
-  Questo consente di concentrarsi sugli oggetti rilevanti davanti al veicolo ego.
-
-### 2. Segmentazione del Piano (Strada)
-
-- **RANSAC Plane Segmentation**: Ho utilizzato l’algoritmo RANSAC per segmentare il piano della strada dalla nuvola di punti. Ho impostato una soglia di distanza di `0.2` per determinare quali punti appartengono al piano.
-
-- **Estrazione degli Inlier e Outlier**: Dopo la segmentazione, ho estratto gli inlier (piano) e gli outlier (oggetti) utilizzando `ExtractIndices`.
-
-### 3. Clustering Euclideo
-
-- **Impostazione dei Parametri basati sul Dataset 2**: Ho inizialmente impostato i parametri per il clustering in base alle esigenze del **dataset 2**, poiché richiedeva una maggiore granularità rispetto al dataset 1. Una volta ottimizzati i parametri sul dataset 2, li ho mantenuti invariati anche per il dataset 1.
-
-- **Utilizzo della Libreria PCL**: Ho utilizzato la classe `EuclideanClusterExtraction` per eseguire il clustering sugli oggetti estratti. I parametri impostati sono:
-
-  - **Tolleranza di Cluster**: `0.2`
-  - **Dimensione Minima del Cluster**: `50`
-  - **Dimensione Massima del Cluster**: `25000`
-
-- **Assegnamento Opzionale**: Ho implementato le funzioni `proximity` ed `euclideanCluster` per eseguire il clustering senza utilizzare le funzioni PCL predefinite. Questo è controllato tramite il flag `#define USE_PCL_LIBRARY`. Se commentato, il programma utilizza la mia implementazione personalizzata.
-
-### 4. Visualizzazione e Rendering
-
-- **Rendering dei Cluster**: Ogni cluster rilevato viene visualizzato con un colore diverso. Ho utilizzato un vettore di colori per differenziare i cluster.
-
-- **Calcolo della Distanza**: Per ogni cluster, ho calcolato la distanza rispetto al veicolo ego utilizzando il centroide del cluster.
-
-- **Visualizzazione della Distanza**: La distanza calcolata viene stampata sulla console e visualizzata nella scena come testo 3D vicino al cluster.
-
-- **Colorazione dei Veicoli Vicini**: I veicoli che sono sia davanti al veicolo ego che entro una distanza di 5 metri vengono evidenziati con una bounding box rossa.
-
----
-
-## Assegnamento Opzionale
-
-Ho implementato le funzioni `proximity` ed `euclideanCluster` seguendo il pseudocodice fornito. Questo mi ha permesso di comprendere meglio l’algoritmo di clustering euclideo e di personalizzare ulteriormente il processo di clustering.
-
----
-
-## Dataset 2
-
-Ho testato la mia soluzione sul **dataset 2**, impostando i parametri di clustering per ottenere la maggiore granularità necessaria. Il dataset 2 presenta una maggiore complessità e richiede parametri più precisi per una segmentazione accurata. Una volta ottimizzati i parametri sul dataset 2, li ho lasciati invariati anche per il dataset 1.
-
-- **Adattamento dei Parametri**: Il dataset 2 richiedeva una regolazione dei parametri per gestire correttamente la segmentazione degli oggetti. Ho affinato la **tolleranza di cluster** e le dimensioni minime e massime dei cluster per ottenere risultati ottimali.
-
-- **Risultati Consistenti**: Dopo aver settato i parametri sul dataset 2, la soluzione funziona correttamente anche sul dataset 1 senza necessità di ulteriori modifiche, dimostrando la robustezza dell'approccio adottato.
-
-- **Performance**: Il programma è stato in grado di segmentare correttamente il piano e rilevare gli oggetti presenti sulla strada in entrambi i dataset, mantenendo prestazioni elevate.
-
----
-
-## Istruzioni per la Compilazione e l’Esecuzione
-
-### Requisiti di Sistema
-
-- **Sistema Operativo**: macOS Sequoia
-- **Gestore Pacchetti**: [Homebrew](https://brew.sh/)
-- **Libreria PCL**: Installare con `brew install pcl`
-- **CMake**: Installare con `brew install cmake`
-- **Boost Libraries**: Installare con `brew install boost`
-- **Altre Dipendenze**:
-
-  - Assicurarsi di avere installate le dipendenze richieste da PCL e Boost, che dovrebbero essere gestite automaticamente da Homebrew.
-
-### Compilazione
-
-1. **Clonare il Repository o Scaricare il Codice**
-
-   Assicurarsi di avere il codice sorgente nella directory desiderata.
-
-2. **Creare la Directory di Build**
-
-   ```bash
-   mkdir build
-   cd build
-   ```
-
-3. **Configurare il Progetto con CMake**
-
-   ```bash
-   cmake ..
-   ```
-
-   Assicurarsi che CMake trovi correttamente le librerie PCL e Boost. Se necessario, specificare manualmente i percorsi utilizzando opzioni di configurazione di CMake.
-
-4. **Compilare il Progetto**
-
-   ```bash
-   make
-   ```
-
-   Questo genererà l’eseguibile `cluster_extraction`.
-
-### Esecuzione
-
+### Execution
 ```bash
 ./cluster_extraction
 ```
 
-**Nota**: Assicurarsi di modificare il percorso del dataset nel codice sorgente:
-
-```cpp
-namespace fs = boost::filesystem;
-std::vector<fs::path> stream(fs::directory_iterator{"/percorso/al/dataset"},
-                             fs::directory_iterator{});
-```
-
-Sostituire `"/percorso/al/dataset"` con il percorso corretto dove sono memorizzati i file PCD del dataset sul vostro sistema.
-
-**Esempio**:
-
-Se i file del dataset si trovano nella directory `/Users/username/Desktop/dataset_1`, allora modificare come segue:
-
-```cpp
-std::vector<fs::path> stream(fs::directory_iterator{"/Users/username/Desktop/dataset_1"},
-                             fs::directory_iterator{});
-```
-
-Per utilizzare il **dataset 2**, modificare il percorso di conseguenza:
-
-```cpp
-std::vector<fs::path> stream(fs::directory_iterator{"/Users/username/Desktop/dataset_2"},
-                             fs::directory_iterator{});
-```
-
----
-
-## Funzionalità Aggiuntive
-
-- **Visualizzazione della Distanza**: Il programma visualizza la distanza di ogni cluster rispetto al veicolo ego sia sulla console che nella visualizzazione grafica.
-
-- **Colorazione Dinamica**: I cluster vengono colorati dinamicamente, e i veicoli vicini vengono evidenziati in rosso per una rapida identificazione.
-
-- **Interfaccia Utente Migliorata**: Ho aggiunto commenti e messaggi di log per migliorare la comprensibilità e la tracciabilità durante l’esecuzione del programma.
+**Note**: Ensure that the dataset path in the source code points to your local PCD files directory.

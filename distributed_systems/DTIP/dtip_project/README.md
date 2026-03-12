@@ -1,125 +1,76 @@
 # DTIP - Distributed Threat Intelligence Platform
 
-Sistema distribuito per la condivisione e l'analisi di Indicatori di Compromissione (IoC) in tempo reale.
+![Java](https://img.shields.io/badge/Java-11%2B-ED8B00?logo=java&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white)
+![RMI](https://img.shields.io/badge/Distributed-RMI-blue)
 
-## 📁 Struttura del Progetto
+A distributed system designed for real-time sharing and analysis of **Indicators of Compromise (IoC)** across a peer-to-peer network.
+
+## 📁 Project Structure
 
 ```
-Progetto_Consegna/
-├── core/               # Componenti principali del sistema
-│   ├── DTIPNode.java           # Nodo P2P principale
-│   ├── VectorClock.java        # Clock vettoriale (Fidge/Mattern)
-│   ├── RicartAgrawalaManager.java  # Mutua esclusione distribuita
-│   ├── SensorListener.java     # Listener TCP per IoC
-│   └── *Analyzer.java          # Analizzatori minacce
-├── model/              # Modelli dati
-├── client/             # Client per testare il sistema (WebBridge, AutomatedSOC)
-├── scripts/            # Script di automazione (Avvio rete, Dashboard)
-├── tui-python/         # Dashboard grafica in Python
-├── util/               # Utility di sistema
-├── interfaces/         # Interfacce RMI
-├── test/               # Test unitari e di integrazione
-├── lib/                # Librerie esterne (.jar)
-├── config/             # Policy di sicurezza Java
-├── docs/               # Documentazione PDF e Javadoc
-└── compile.sh          # Script di compilazione principale
+dtip_project/
+├── core/               # Main system components
+│   ├── DTIPNode.java           # Principal P2P Node
+│   ├── VectorClock.java        # Fidge/Mattern Vector Clock implementation
+│   ├── RicartAgrawalaManager.java  # Distributed Mutual Exclusion
+│   ├── SensorListener.java     # TCP listener for IoC injection
+│   └── *Analyzer.java          # Threat analysis strategies (Heuristic, Gemini, Ollama)
+├── model/              # Data models and structures
+├── client/             # Testing clients (WebBridge, AutomatedSOC)
+├── scripts/            # Automation scripts for network startup and TUI
+├── tui-python/         # Graphical TUI Dashboard implemented in Python
+├── util/               # System utilities and metrics collectors
+├── interfaces/         # RMI Interface definitions
+├── test/               # Unit and integration tests
+├── lib/                # External libraries (Lanterna, JUnit)
+├── config/             # Java security policies
+└── compile.sh          # Main compilation script
 ```
 
 ## 🚀 Quick Start
 
-### 1. Compilazione
-
+### 1. Compilation
+Ensure executable permissions are set:
 ```bash
 chmod +x compile.sh scripts/*.sh
 ./compile.sh
 ```
 
-### 2. Esecuzione (Network Automatica - macOS)
-
-Il sistema include uno script che avvia automaticamente 5 nodi e il WebBridge. 
-*Nota: Lo script utilizza `osascript` ed è progettato per **macOS**.*
-
+### 2. Automatic Network Startup (macOS)
+The system includes an AppleScript-based automation that launches 5 nodes and a WebBridge in separate terminals.
 ```bash
 ./scripts/start_network.sh
 ```
 
-### 2b. Esecuzione Manuale (Linux / Windows)
+### 2b. Manual Startup (Linux / Windows)
+Open separate terminals for each node. Use the `-cp` (classpath) flag appropriately.
+*Note: On Windows, use a semicolon (`;`) as the classpath separator instead of a colon (`:`).*
 
-Se non utilizzi macOS, puoi avviare i nodi manualmente aprendo **terminali separati** per ogni componente (dalla root del progetto).
-
-**Nota per Windows:** Sostituire i due punti (`:`) nel classpath (`-cp`) con il punto e virgola (`;`).
-
-**Terminale 1 (Nodo 0 - Banca):**
+Example for Node 0:
 ```bash
-java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 0 Banca 5
+java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 0 Bank 5
 ```
 
-**Terminale 2 (Nodo 1 - Retail):**
-```bash
-java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 1 Retail 5
-```
-
-**Terminale 3 (Nodo 2 - Energia):**
-```bash
-java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 2 Energia 5
-```
-
-**Terminale 4 (Nodo 3 - Sanità):**
-```bash
-java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 3 Sanità 5
-```
-
-**Terminale 5 (Nodo 4 - Trasporti):**
-```bash
-java -Djava.security.policy=config/local_java.policy -cp "out:lib/lanterna-3.1.1.jar" core.DTIPNode 4 Trasporti 5
-```
-
-**Terminale 6 (WebBridge - Opzionale):**
-```bash
-java -cp "out:lib/lanterna-3.1.1.jar" client.WebBridge
-```
-
-### 3. Dashboard TUI
-
-Per visualizzare lo stato della rete in tempo reale (richiede Python 3):
-
+### 3. Real-time Dashboard
+To visualize the network status, ensure Python 3 is installed and run:
 ```bash
 ./scripts/run_dashboard.sh
 ```
 
-### 4. Iniezione IoC di Test
-
-Una volta avviato il sistema, puoi iniettare IoC via TCP per testare la propagazione:
-
+### 4. Testing IoC Injection
+Inject indicators via TCP to test propagation and analysis:
 ```bash
-# Formato: TYPE:VALUE:CONFIDENCE[:TAGS]
+# Format: TYPE:VALUE:CONFIDENCE[:TAGS]
 echo "IP:192.168.1.100:85:malware" | nc localhost 9000
 echo "DOMAIN:evil.com:90:phishing,critical" | nc localhost 9001
 ```
 
-## 📊 Algoritmi Implementati
+## 📊 Implemented Algorithms
 
-| Algoritmo | Scopo | File |
-|-----------|-------|------|
-| **Ricart-Agrawala** | Mutua esclusione per scrittura ledger | `RicartAgrawalaManager.java` |
-| **Vector Clock** | Ordinamento causale eventi | `VectorClock.java` |
-| **Gossip Protocol** | Propagazione IoC nella rete | `DTIPNode.propagateIoC()` |
+- **Ricart-Agrawala**: Distributed mutual exclusion for write-access to the shared ledger.
+- **Vector Clock**: Causal ordering of events across the network.
+- **Gossip Protocol**: Probabilistic propagation of IoCs for high availability and fault tolerance.
 
-## 📖 Documentazione
-
-- **PDF Completo**: `docs/Documentazione_DTIP.pdf`
-- **Javadoc**: `docs/javadoc/index.html`
-
-## 🔧 Requisiti
-
-- Java 11 o superiore
-- Python 3 (per la dashboard opzionale)
-- Librerie incluse in `lib/`:
-  - JUnit Platform Console Standalone
-  - Lanterna 3.1.1 (TUI)
-
-## 🎓 Autore
-
-**Francesco Caligiuri**
-Corso di Algoritmi Distribuiti - A.A. 2025/2026
-
+## 🎓 Academic Context
+This project was developed for the **Distributed Systems** course (A.A. 2025/2026) as part of the Master's Degree in Computer Science at **UNIMORE**.
