@@ -1,0 +1,43 @@
+#ifndef TRACKLET_H_
+#define TRACKLET_H_
+
+#include <vector>
+#include <cmath>
+
+#include "KalmanFilter.h"
+
+class Tracklet
+{
+public:
+  Tracklet(int idTrack, double x, double y);
+  ~Tracklet();
+
+  void predict();
+  void update(double x, double y, bool lidarStatus);
+
+  // getters
+  double getX() { return kf_.getX(); }
+  double getY() { return kf_.getY(); }
+  double getXCovariance() { return kf_.getXCovariance(); }
+  double getYCovariance() { return kf_.getYCovariance(); }
+  int getLossCount() { return loss_count_; }
+  int getId() const { return id_; }
+  double getTotalDistance() const { return total_distance_; }
+
+private:
+  // filter
+  KalmanFilter kf_;
+
+  // tracklet id
+  int id_;
+
+  // number of loss since last update
+  int loss_count_;
+
+  double total_distance_;
+  double last_x_;
+  double last_y_;
+  bool first_update_;
+};
+
+#endif // TRACKLET_H_

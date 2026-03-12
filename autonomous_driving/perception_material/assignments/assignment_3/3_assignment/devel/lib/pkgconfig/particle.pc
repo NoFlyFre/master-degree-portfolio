@@ -1,8 +1,0 @@
-prefix=/assignment3/devel
-
-Name: particle
-Description: Description of particle
-Version: 0.0.0
-Cflags: -I/assignment3/src/particle/include
-Libs: -L${prefix}/lib 
-Requires: nav_msgs roscpp
