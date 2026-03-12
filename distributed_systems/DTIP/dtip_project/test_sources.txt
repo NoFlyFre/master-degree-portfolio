@@ -1,0 +1,5 @@
+test/core/VectorClockTest.java
+test/core/DTIPNodeTest.java
+test/core/RicartAgrawalaTest.java
+test/integration/ScenarioTest.java
+test/model/IoCTest.java

@@ -1,0 +1,54 @@
+DTIP Log Export - 2026-01-29 09:45:22
+====================================================================================================
+Time       | Type         | Source          | Action          | Details
+----------------------------------------------------------------------------------------------------
+09:41:23   | SYSTEM       | TUI             | Startup         | Waiting for data... (Auto-save enabled)
+09:42:14   | CMD          | User            | Inject          | Injecting IP 2.2.2.2 (Conf: 55)...
+09:42:14   | OK           | Node 1          | Inject Success  | IoC injected! Check nodes.
+09:42:15   | GOSSIP       | Node 1          | 📤 Publish       | 2.2.2.2
+09:42:15   | GOSSIP       | Node 0          | 📥 Receive       | Rx 2.2.2.2
+09:42:15   | GOSSIP       | Node 4          | 📥 Receive       | Rx 2.2.2.2
+09:42:15   | GOSSIP       | Node 3          | 📥 Receive       | Rx 2.2.2.2
+09:42:15   | GOSSIP       | Node 2          | 📥 Receive       | Rx 2.2.2.2
+09:42:17   | VOTE         | Node 1          | 🟢 VOTE          | INNOCUO
+09:42:18   | VOTE         | Node 0          | 🟢 VOTE          | INNOCUO
+09:42:19   | VOTE         | Node 3          | 🔴 VOTE          | MINACCIA
+09:42:19   | VOTE         | Node 2          | 🟢 VOTE          | INNOCUO
+09:42:19   | CONSENSUS    | Node 2          | ✅ SAFE          | [Node 2] 2da4ddab: PENDING -> REJECTED
+09:42:53   | CMD          | User            | Kill            | Killing Node 2...
+09:42:53   | OK           | Chaos           | Kill            | Node 2 is now OFFLINE
+09:43:12   | CMD          | User            | Inject          | Injecting IP 23.54.76.32 (Conf: 55)...
+09:43:12   | OK           | Node 1          | Inject Success  | IoC injected! Check nodes.
+09:43:12   | GOSSIP       | Node 1          | 📤 Publish       | 23.54.76.32
+09:43:12   | GOSSIP       | Node 3          | 📥 Receive       | Rx 23.54.76.32
+09:43:12   | GOSSIP       | Node 0          | 📥 Receive       | Rx 23.54.76.32
+09:43:12   | GOSSIP       | Node 4          | 📥 Receive       | Rx 23.54.76.32
+09:43:14   | VOTE         | Node 3          | 🔴 VOTE          | MINACCIA
+09:43:15   | VOTE         | Node 4          | 🟢 VOTE          | INNOCUO
+09:43:16   | VOTE         | Node 0          | 🟢 VOTE          | INNOCUO
+09:43:16   | VOTE         | Node 1          | 🟢 VOTE          | INNOCUO
+09:43:16   | CONSENSUS    | Node 1          | ✅ SAFE          | [Node 1] a509eef9: PENDING -> REJECTED
+09:44:08   | CMD          | User            | Inject          | Injecting DOMAIN malw.are.it (Conf: 50)...
+09:44:08   | OK           | Node 0          | Inject Success  | IoC injected! Check nodes.
+09:44:09   | GOSSIP       | Node 0          | 📤 Publish       | DOMAIN:malw.are.it
+09:44:09   | GOSSIP       | Node 3          | 📥 Receive       | Rx DOMAIN:malw.are.it
+09:44:09   | GOSSIP       | Node 4          | 📥 Receive       | Rx DOMAIN:malw.are.it
+09:44:09   | GOSSIP       | Node 1          | 📥 Receive       | Rx DOMAIN:malw.are.it
+09:44:11   | VOTE         | Node 0          | 🟢 VOTE          | INNOCUO
+09:44:12   | VOTE         | Node 4          | 🟢 VOTE          | INNOCUO
+09:44:13   | VOTE         | Node 1          | 🔴 VOTE          | MINACCIA
+09:44:14   | VOTE         | Node 3          | 🔴 VOTE          | MINACCIA
+09:44:14   | CONSENSUS    | Node 3          | ⏳ SOC           | [Node 3] 9043b7fe: PENDING -> AWAITING_SOC
+09:44:14   | CONSENSUS    | Node 1          | ⏳ SOC           | [Node 1] 9043b7fe: PENDING -> AWAITING_SOC
+09:44:14   | CONSENSUS    | Node 0          | ⏳ SOC           | [Node 0] 9043b7fe: PENDING -> AWAITING_SOC
+09:44:14   | CONSENSUS    | Node 4          | ⏳ SOC           | [Node 4] 9043b7fe: PENDING -> AWAITING_SOC
+09:44:29   | CONSENSUS    | Node 0          | ⚠️ THREAT       | [Node 0] 9043b7fe: AWAITING_SOC -> VERIFIED
+09:44:29   | MUTEX        | Node 0          | ⏳ Wait          | Requesting Mutex...
+09:44:29   | LEDGER       | Node 0          | 🔎 Check         | Verifying deduplication
+09:44:29   | LEDGER       | Node 0          | ⚪ SKIP          | Already in Ledger
+09:45:21   | SYSTEM       | TUI             | Export          | Log saved to dtip_log.txt
+09:45:22   | SYSTEM       | TUI             | Export          | Log saved to dtip_log.txt
+09:45:22   | SYSTEM       | TUI             | Export          | Log saved to dtip_log.txt
+09:45:45   | CMD          | User            | Revive          | Reviving Node 2...
+09:45:45   | OK           | Chaos           | Revive          | Node 2 is now ONLINE
+09:45:45   | SYNC         | Node 2          | Anti-Entropy    | Performing sync...

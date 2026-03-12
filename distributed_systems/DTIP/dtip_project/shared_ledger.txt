@@ -1,0 +1,2 @@
+[2026-01-28 12:31:23] Node 0 | DOMAIN: malwa.re.com | ID: a0315388 | VERIFIED
+[2026-01-28 13:26:57] Node 0 | DOMAIN: malw.are.it | ID: 9043b7fe | VERIFIED

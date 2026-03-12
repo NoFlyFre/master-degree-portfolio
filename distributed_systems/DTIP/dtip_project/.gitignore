@@ -1,0 +1,33 @@
+# DTIP .gitignore
+
+# Compiled output
+out/
+*.class
+
+# Logs directory
+#logs/
+
+# Environment files (contain secrets!)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+#*.log
+#shared_ledger.txt
+
+# Temporary files
+*.tmp
+*.bak
