@@ -14,10 +14,10 @@ Welcome to my Master's Degree (Laurea Magistrale in Informatica) portfolio. This
 
 To ensure immediate access and visibility, all repositories related to Computer Security—including academic courses—are maintained as external, standalone projects.
 
-*   **[Secure Software Development](https://github.com/NoFlyFre/SecureSoftwareDev)**: Master's course repository focusing on secure coding and practical exploitation labs (Nebula, Protostar, WebForPentester).
-*   **[CyberSec-Lab](https://github.com/NoFlyFre/CyberSec-Lab)**: Master's course exercises and hands-on activities for Computer Security.
-*   **[Olicyber-Challenges](https://github.com/NoFlyFre/Olicyber-Challenges)**: Solutions and writeups for Olicyber CTF challenges covering Web Security, Cryptography, and Network Analysis.
-*   **[HackTheBox](https://github.com/NoFlyFre/HackTheBox)**: Personal walkthroughs and writeups for HackTheBox penetration testing machines.
+*   **[Secure Software Development](https://github.com/NoFlyFre/secure-software-development)**: Master's course repository focusing on secure coding and practical exploitation labs (Nebula, Protostar, WebForPentester).
+*   **[Computer Security Labs](https://github.com/NoFlyFre/computer-security-labs)**: Master's course exercises and hands-on activities for Computer Security.
+*   **[Olicyber CTF Writeups](https://github.com/NoFlyFre/olicyber-ctf-writeups)**: Solutions and writeups for Olicyber CTF challenges covering Web Security, Cryptography, and Network Analysis.
+*   **[HTB Writeups](https://github.com/NoFlyFre/htb-writeups)**: Personal walkthroughs and writeups for HackTheBox penetration testing machines.
 
 ## 🛠️ Tech Stack & Topics
 
