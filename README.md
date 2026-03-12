@@ -10,6 +10,10 @@ Welcome to my Master's Degree (Laurea Magistrale in Informatica) portfolio. This
 *   **[General Computer Science Tutoring](./general_computer_science_tutoring/)**: A structured collection of teaching materials and slides I created/used for tutoring students in fundamental computer science concepts (Boolean algebra, programming, data structures).
 *   **[Privacy & Data Protection](./privacy_data_protection/)**: Notes and regulatory tables concerning IT privacy laws, GDPR, and data protection mechanisms.
 
+## 🔗 Associated Repositories
+
+*   **[Secure Software Development](https://github.com/NoFlyFre/SecureSoftwareDev)**: A standalone repository containing materials, projects, and notes specifically dedicated to the Secure Software Development course. It is kept separate due to its specific importance and scope.
+
 ## 🛠️ Tech Stack & Topics
 
 Across the various courses, you will find implementations and notes involving:
