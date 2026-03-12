@@ -10,9 +10,14 @@ Welcome to my Master's Degree (Laurea Magistrale in Informatica) portfolio. This
 *   **[General Computer Science Tutoring](./general_computer_science_tutoring/)**: A structured collection of teaching materials and slides I created/used for tutoring students in fundamental computer science concepts (Boolean algebra, programming, data structures).
 *   **[Privacy & Data Protection](./privacy_data_protection/)**: Notes and regulatory tables concerning IT privacy laws, GDPR, and data protection mechanisms.
 
-## 🔗 Associated Repositories
+## 🛡️ Dedicated Security Repositories
 
-*   **[Secure Software Development](https://github.com/NoFlyFre/SecureSoftwareDev)**: A standalone repository containing materials, projects, and notes specifically dedicated to the Secure Software Development course. It is kept separate due to its specific importance and scope.
+To ensure immediate access and visibility, all repositories related to Computer Security—including academic courses—are maintained as external, standalone projects.
+
+*   **[Secure Software Development](https://github.com/NoFlyFre/SecureSoftwareDev)**: Master's course repository focusing on secure coding and practical exploitation labs (Nebula, Protostar, WebForPentester).
+*   **[CyberSec-Lab](https://github.com/NoFlyFre/CyberSec-Lab)**: Master's course exercises and hands-on activities for Computer Security.
+*   **[Olicyber-Challenges](https://github.com/NoFlyFre/Olicyber-Challenges)**: Solutions and writeups for Olicyber CTF challenges covering Web Security, Cryptography, and Network Analysis.
+*   **[HackTheBox](https://github.com/NoFlyFre/HackTheBox)**: Personal walkthroughs and writeups for HackTheBox penetration testing machines.
 
 ## 🛠️ Tech Stack & Topics
 
