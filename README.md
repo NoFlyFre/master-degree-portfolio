@@ -57,7 +57,7 @@ graph TD
 
 ## 👨‍🏫 Teaching Experience
 
-### [Teaching Assistant (Tutor Didattico)](./Teaching-Experience/)
+### [Informatica Generale (Python Tutoring)](./Informatica-Generale-Tutoring/)
 *   Supporting the **Informatica Generale** course for the Bachelor's Degree.
 *   Developed **11 sets of exercises** and official solutions covering C programming, logic, and computer architecture basics.
 
@@ -68,7 +68,7 @@ graph TD
 - `Applied-Cryptography/`: Cryptographic theory and exam preparation.
 - `Privacy-Data-Protection/`: GDPR and legal-technical analysis.
 - `Distributed-Systems/`: The DTIP project and distributed systems theory.
-- `Teaching-Experience/`: Materials from my time as a Teaching Assistant.
+- `Informatica-Generale-Tutoring/`: Materials from my time as a Teaching Assistant.
 
 ---
 *Contact me for more details about specific implementation details or academic research.*
