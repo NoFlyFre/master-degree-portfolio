@@ -1,35 +1,70 @@
-# 🎓 Master's Degree Portfolio (Informatica Magistrale)
+# 🎓 Master's Degree Portfolio — Computer Science @ Unimore
 
-Welcome to my Master's Degree (Laurea Magistrale in Informatica) portfolio. This repository serves as a structured collection of my academic materials, projects, assignments, and study notes gathered during my university journey.
+![Java](https://img.shields.io/badge/Java-ED8B00?logo=java&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![C++](https://img.shields.io/badge/C%2B%2B-00599C?logo=cplusplus&logoColor=white)
+![ROS](https://img.shields.io/badge/ROS-22314E?logo=ros&logoColor=white)
+![Security](https://img.shields.io/badge/Security-Offensive%20%26%20Defensive-C1121F)
 
-## 📂 Repository Structure
+The coursework, projects and study material from my **Laurea Magistrale in Informatica** at the
+University of Modena and Reggio Emilia, with a specialisation built around **computer security** and
+**distributed systems**.
 
-*   **[Applied Cryptography](./applied_cryptography/)**: Study summaries and exam questions related to cryptographic algorithms and protocols.
-*   **[Autonomous Driving](./autonomous_driving/)**: Comprehensive materials covering both Control and Perception systems for autonomous vehicles, including hands-on assignments and projects.
-*   **[Computer Security](./computer_security/)**: Full course handbook and exam questions covering attacks, cryptographic defenses, and the design of secure network architectures (IDS, SIEM, WAF, VPN, NAC, DLP).
-*   **[Distributed Systems](./distributed_systems/)**: Theoretical notes and practical implementations, featuring the DTIP (Distributed Threat Intelligence Platform) project.
-*   **[General Computer Science Tutoring](./general_computer_science_tutoring/)**: A structured collection of teaching materials and slides I created/used for tutoring students in fundamental computer science concepts (Boolean algebra, programming, data structures).
-*   **[Privacy & Data Protection](./privacy_data_protection/)**: Notes and regulatory tables concerning IT privacy laws, GDPR, and data protection mechanisms.
+Each directory is a self-contained course record: what I built, the techniques behind it, and the
+written reports. Security course *labs* live in standalone repositories, listed at the bottom.
 
-## 🛡️ Dedicated Security Repositories
+## 📊 Courses in this repository
 
-To ensure immediate access and visibility, all repositories related to Computer Security—including academic courses—are maintained as external, standalone projects.
+| Course | CFU | Grade | What's inside |
+|---|---|---|---|
+| [Computer Security](./computer_security/) | 9 | **30/30 cum laude** | 109-page course handbook, exam questions, buffer overflow / SQLi / XSS labs |
+| [Distributed Systems](./distributed_systems/) | 9 | **30/30** | Full theory notes + **DTIP**, a P2P threat intelligence platform in Java RMI |
+| [Privacy & Data Protection](./privacy_data_protection/) | 6 | **30/30** | GDPR, DPIA, cybercrime notes and a regulatory quick-reference table |
+| [Autonomous Driving](./autonomous_driving/) | 6 | **27/30** | 6 assignments: vehicle dynamics, MPC/Stanley/Pure Pursuit, PCL clustering, Kalman & Particle Filters |
+| [Cryptography Algorithms](./applied_cryptography/) | 6 | **23/30** | Symmetric/asymmetric algorithm summaries and exam question bank |
+| [CS Tutoring](./general_computer_science_tutoring/) | — | — | 9 lecture decks I authored as an academic tutor |
 
-*   **[Secure Software Development](https://github.com/NoFlyFre/secure-software-development)**: Master's course repository focusing on secure coding and practical exploitation labs (Nebula, Protostar, WebForPentester).
-*   **[Computer Security Labs](https://github.com/NoFlyFre/computer-security-labs)**: Hands-on lab work for the Computer Security course — buffer overflow analysis with GDB, SQL injection and XSS exploitation against an OWASP Broken Web Applications VM. The theory notes for the same course live in [`computer_security/`](./computer_security/).
-*   **[Olicyber CTF Writeups](https://github.com/NoFlyFre/olicyber-ctf-writeups)**: Solutions and writeups for Olicyber CTF challenges covering Web Security, Cryptography, and Network Analysis.
-*   **[HTB Writeups](https://github.com/NoFlyFre/htb-writeups)**: Personal walkthroughs and writeups for HackTheBox penetration testing machines.
+## 🏆 Highlights
 
-## 🛠️ Tech Stack & Topics
+**[DTIP — Distributed Threat Intelligence Platform](./distributed_systems/DTIP/)**
+A peer-to-peer network for real-time sharing and analysis of Indicators of Compromise. Implements
+Fidge/Mattern vector clocks, Ricart–Agrawala distributed mutual exclusion, pluggable threat analyzers
+(heuristic, Gemini, Ollama) and a Python TUI dashboard on top of Java RMI. Ships with UML protocol
+models, an architecture document and a full operator guide.
 
-Across the various courses, you will find implementations and notes involving:
-*   **Languages:** Python, C++, Java, C
-*   **Tools & Frameworks:** ROS, PCL (Point Cloud Library), OpenCV, GDB, sqlmap, Burp Suite
-*   **Concepts:** Kalman Filters, Path Planning (MPC, Stanley, Pure Pursuit), Distributed Algorithms, Cryptography & PKI, Web Application Security (OWASP Top 10), Memory Corruption, Intrusion Detection, Risk Management (ISO 27000)
+**[Autonomous Driving — Perception & Control](./autonomous_driving/)**
+Six graded assignments in C++ and Python: a Frenet trajectory planner with static obstacle avoidance,
+an MPC controller benchmarked against Pure Pursuit and Stanley at up to 25 m/s, a PCL/RANSAC Euclidean
+clustering pipeline for LiDAR object detection, a Kalman Filter multi-object tracker, and a Particle
+Filter localiser running on ROS.
 
-## 📝 Naming Convention
+**[Computer Security](./computer_security/)**
+A handbook I wrote covering the entire course — from CVE/CVSS classification and memory corruption
+through to PKI, intrusion detection and ISO 27000 risk management — including worked solutions for
+every lab exercise.
 
-All files and directories follow the standard **`snake_case`** convention and are named in **English** for consistency and programmatic ease of access.
+## 🛡️ Dedicated security repositories
+
+Practical security work is kept in standalone repositories so it stays immediately visible:
+
+*   **[Secure Software Development](https://github.com/NoFlyFre/secure-software-development)** — secure coding and exploitation labs (Nebula, Protostar, WebForPentester). *Course grade: 30/30.*
+*   **[Computer Security Labs](https://github.com/NoFlyFre/computer-security-labs)** — buffer overflow analysis with GDB, SQL injection and XSS against an OWASP Broken Web Applications VM. Theory notes for the same course are in [`computer_security/`](./computer_security/).
+*   **[OliCyber CTF Writeups](https://github.com/NoFlyFre/olicyber-ctf-writeups)** — web security, cryptography and network analysis challenges.
+*   **[HTB Writeups](https://github.com/NoFlyFre/htb-writeups)** — HackTheBox penetration testing walkthroughs.
+*   **[BreachLab Writeups](https://github.com/NoFlyFre/breachlab-writeups)** — wargame and privilege escalation field notes.
+
+## 🛠️ Tech stack & concepts
+
+*   **Languages** — Java, Python, C++, C
+*   **Frameworks & tools** — ROS, PCL (Point Cloud Library), OpenCV, Java RMI, GDB, sqlmap, Burp Suite
+*   **Security** — OWASP Top 10, memory corruption, cryptography & PKI, intrusion detection, SIEM/SOC, ISO 27000 risk management, GDPR compliance
+*   **Distributed systems** — consensus and Byzantine fault tolerance, vector clocks, distributed mutual exclusion, DHTs, leader election
+*   **Robotics & control** — Kalman and Particle Filters, MPC, Frenet planning, point cloud segmentation
+
+## 📝 Conventions
+
+Files and directories use **`snake_case`** and are named in **English**, for consistency and
+programmatic access. Repository topic: `unimore-informatica`.
 
 ---
-*Created and maintained as a personal academic archive.*
+*Personal academic archive — University of Modena and Reggio Emilia.*

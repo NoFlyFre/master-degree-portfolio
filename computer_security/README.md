@@ -1,54 +1,79 @@
-# 🔐 Computer Security (Sicurezza Informatica)
+# 🔐 Computer Security
 
-Study materials for the **Computer Security** course (9 CFU, Prof. Mirco Marchetti — A.Y. 2024/2025).
-Course completed with a final grade of **30/30 cum laude**.
+![Grade](https://img.shields.io/badge/Grade-30%2F30%20cum%20laude-brightgreen)
+![CFU](https://img.shields.io/badge/CFU-9-blue)
+![GDB](https://img.shields.io/badge/GDB-Exploitation-red)
+![OWASP](https://img.shields.io/badge/OWASP-Top%2010-000000)
 
-The course is organised in three parts: offensive techniques, defensive mechanisms, and the design of
-secure network architectures, each backed by hands-on lab sessions.
+*Sicurezza Informatica — 9 CFU · Prof. Mirco Marchetti · A.Y. 2024/2025 · **30/30 cum laude***
 
-## 📄 Contents
+The flagship security course of the degree: three modules covering how systems get broken, how they get
+defended, and how you architect a network so the first is hard and the second is measurable.
 
-*   **`course_handbook.pdf`**: A complete 109-page handbook I compiled from the course slides, covering
-    all three parts plus fully worked solutions for the buffer overflow, SQL injection and XSS labs,
-    and a solved mock exam.
-*   **`exam_questions.pdf`**: Recurring oral exam questions with worked answers (25 pages).
+## 📄 What's here
 
-## 📚 Topics Covered
+*   **[`course_handbook.pdf`](./course_handbook.pdf)** — a 109-page handbook I wrote from the ground up
+    covering all three modules, with fully worked solutions for every lab exercise and a solved mock
+    exam. Written to be studied from, not just skimmed.
+*   **[`exam_questions.pdf`](./exam_questions.pdf)** — 25 pages of recurring oral exam questions with
+    worked answers.
 
-**Part I — Attacks**
-Software, human and organisational vulnerabilities · vulnerability life cycle and classification
-(CVE, CVSS v4, CPE, OVAL, CWE, MITRE ATT&CK) · incomplete mediation and TOCTTOU · code and OS command
-injection · buffer overflow and shellcode injection · SQL injection (UNION-based, blind, file access) ·
-Cross-Site Scripting (reflected, stored, DOM) · OWASP Top 10 · wireless protocol vulnerabilities ·
-spoofing, sniffing and fingerprinting · malware taxonomy, polymorphic/metamorphic evasion, ransomware,
-cyber-weapons and APTs · DoS/DDoS and botnets.
+## 💣 Part I — Attacks
 
-**Part II — Defenses**
-Cryptosystems, unconditional vs computational security and cryptanalysis · classical ciphers ·
-symmetric cryptography (Feistel, DES, 3DES, AES) and block cipher operation modes · stream ciphers ·
-hash functions and MACs · asymmetric cryptography (RSA, Diffie-Hellman) · digital signatures ·
-Certification Authorities and PKI · secure protocols (IPsec, SSL/TLS) · secure application services
-(HTTPS, S/MIME, PGP, SSH) · digital identity, AAA, multi-factor authentication, SSO and passkeys.
+Vulnerability life cycle and the classification ecosystem that makes it tractable: **CVE**, **CVSS v4**,
+CPE, OVAL, **CWE**, **MITRE ATT&CK**.
 
-**Part III — Secure Architecture Design**
-The six principles of technical countermeasures · risk-to-countermeasure mapping · web application
-firewalls, VPN, NAC and Data Loss Prevention · security monitoring of network and system events ·
-threat intelligence · Intrusion Detection Systems (performance metrics, analysis models,
-NIDS/HIDS classification) · SIEM and SOC · cybersecurity management: checklist vs risk-based
-approaches, the Deming/PDCA cycle, the ISO 27000 family, risk assessment and treatment.
+Application-level flaws — incomplete mediation, **TOCTTOU** race conditions, code and OS command
+injection. **Buffer overflow** end to end: process memory layout, stack frame anatomy, shellcode
+injection, relative addressing with JMP/CALL/POP, NOP sleds, and the countermeasures that broke each
+technique. **SQL injection** in all its shapes: tautology-based authentication bypass, UNION-based
+exfiltration, blind SQLi, and file access leading to web server compromise. **XSS** reflected, stored
+and DOM-based. The **OWASP Top 10** — IDOR, sensitive data exposure, insecure design, security
+misconfiguration, broken authentication, insecure deserialization, SSRF.
 
-## 🧪 Lab Sessions
+Then the threat landscape: wireless protocol vulnerabilities, spoofing, sniffing and fingerprinting;
+malware taxonomy by propagation and payload; polymorphic and metamorphic evasion; ransomware business
+models; state-sponsored spyware and cyber-weapons; **APTs**; **DoS/DDoS** and botnet infrastructure.
 
-Exercises were run against a local **OWASP Broken Web Applications** VM:
+## 🛡️ Part II — Defenses
 
-*   **Buffer overflow**: stack layout analysis with GDB, overwriting local variables, hijacking
-    function pointers and return addresses.
-*   **SQL injection**: vulnerability detection, authentication bypass via tautology, UNION-based
-    exfiltration, blind SQLi, and the corresponding defensive fixes.
-*   **XSS**: reflected and persistent payloads, plus output-encoding countermeasures.
+Cryptosystem fundamentals, unconditional vs computational security, cryptanalysis and steganography.
+Classical ciphers as a way in — substitution, frequency analysis, Vigenère, one-time pad, transposition,
+product ciphers.
 
-Tooling: GDB, `sqlmap`, Burp Suite.
+Modern **symmetric** cryptography: Feistel networks, **DES**, 2DES/3DES and the meet-in-the-middle
+attack, **AES**, block cipher operation modes, stream ciphers and RC4. Integrity through hash functions
+and **MACs**. **Asymmetric** cryptography: the key distribution problem, **RSA**, **Diffie-Hellman**.
+**Digital signatures**, **Certification Authorities** and the trust model behind **PKI**.
 
-> The lab code and exploit scripts live in the dedicated
-> [Computer Security Labs](https://github.com/NoFlyFre/computer-security-labs) repository, in line with
-> the convention of keeping security course work in standalone repositories.
+Secure protocols in practice: **IPsec**, **SSL/TLS**, **HTTPS**, **S/MIME**, **PGP**, **SSH**.
+Digital identity and **AAA** — authentication factors, two-factor and OTP, SSO and passkeys, privileged
+identity management, **DLP**.
+
+## 🏗️ Part III — Secure architecture design
+
+The six principles behind technical countermeasures, and the mapping from risk to control.
+**Web application firewalls**, network segmentation, **VPN**, **NAC**, **DLP**.
+
+Continuous **security monitoring** of network and system events, threat intelligence feeds.
+**Intrusion Detection Systems** in depth: performance metrics and the false-positive trade-off,
+signature vs anomaly analysis models, NIDS/HIDS classification, and how **SIEM** and a **SOC** turn
+alerts into response.
+
+**Cybersecurity management**: checklist vs risk-based approaches, the **Deming/PDCA** cycle, the
+**ISO 27000** family, risk as threat × vulnerability, the full risk management pipeline from asset
+identification through the risk matrix to treatment decisions.
+
+## 🧪 Labs
+
+Run against a local **OWASP Broken Web Applications** VM, with `GDB`, `sqlmap` and Burp Suite:
+
+| Lab | What I did |
+|---|---|
+| **Buffer overflow** | Stack layout analysis in GDB, overwriting local variables, hijacking a function pointer, overwriting the return address |
+| **SQL injection** | Detection, tautology authentication bypass, UNION-based exfiltration, blind SQLi, then closing the hole with prepared statements |
+| **XSS** | Reflected and persistent payloads, output encoding countermeasures |
+
+> Lab code and exploit scripts live in
+> **[computer-security-labs](https://github.com/NoFlyFre/computer-security-labs)**, following the
+> convention of keeping practical security work in standalone repositories.
