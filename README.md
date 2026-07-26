@@ -17,6 +17,7 @@ written reports. Security course *labs* live in standalone repositories, listed 
 
 | Course | CFU | Grade | What's inside |
 |---|---|---|---|
+| [Kernel Hacking](./kernel_hacking/) | 6 | **30/30 cum laude** | Two upstream Linux patches — an XFS lockdep fix for a syzkaller bug, and a WireGuard KCSAN data race — with the assembly-level analysis behind them |
 | [Computer Security](./computer_security/) | 9 | **30/30 cum laude** | 109-page course handbook, exam questions, buffer overflow / SQLi / XSS labs |
 | [Distributed Systems](./distributed_systems/) | 9 | **30/30** | Full theory notes + **DTIP**, a P2P threat intelligence platform in Java RMI |
 | [Privacy & Data Protection](./privacy_data_protection/) | 6 | **30/30** | GDPR, DPIA, cybercrime notes and a regulatory quick-reference table |
@@ -24,7 +25,22 @@ written reports. Security course *labs* live in standalone repositories, listed 
 | [Cryptography Algorithms](./applied_cryptography/) | 6 | **23/30** | Symmetric/asymmetric algorithm summaries and exam question bank |
 | [CS Tutoring](./general_computer_science_tutoring/) | — | — | 9 lecture decks I authored as an academic tutor |
 
+### Courses without a directory here
+
+| Course | CFU | Grade | Where it lives |
+|---|---|---|---|
+| Sviluppo di Software Sicuro | 9 | **30/30** | [secure-software-development](https://github.com/NoFlyFre/secure-software-development) |
+| IoT Systems | 6 | **30/30 cum laude** | Project material held back pending a coordinated vulnerability disclosure |
+| Metodologie di Sviluppo Software | 6 | **30/30** | No archived material |
+| High Performance Computing | 9 | **27/30** | No archived material |
+
 ## 🏆 Highlights
+
+**[Kernel Hacking — two upstream Linux patches](./kernel_hacking/)**
+A fix for syzkaller bug `5eb0d61dfb76ca12670c`: an inconsistent lock state on `inode->i_lock` in XFS,
+where `igrab()` took a plain spinlock on a path reachable from softirq. Backed by a recursive expansion
+of `igrab()` vs `ihold()` down to x86-64 assembly and a proof that `i_count > 0` holds at every call
+site. Plus a WireGuard `READ_ONCE`/`WRITE_ONCE` annotation closing a KCSAN-reported data race.
 
 **[DTIP — Distributed Threat Intelligence Platform](./distributed_systems/DTIP/)**
 A peer-to-peer network for real-time sharing and analysis of Indicators of Compromise. Implements

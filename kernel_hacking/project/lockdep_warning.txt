@@ -1,0 +1,145 @@
+Bug: inconsistent lock state in igrab
+Kernel: syzkaller #0 (commit cd7a5651db26)
+Syzbot: https://syzkaller.appspot.com/bug?extid=5eb0d61dfb76ca12670c
+Reproduced: 3/4 fresh QEMU boots
+QEMU command:
+  qemu-system-x86_64 \
+    -kernel ~/repro/bzImage-cd7a5651 \
+    -drive file=~/repro/disk-cd7a5651.raw,format=raw,if=ide \
+    -append "root=/dev/sda1 console=ttyS0 panic_on_warn=1 panic=1 earlyprintk=serial" \
+    -virtfs local,path=/home/luffy/repro,mount_tag=host0,security_model=mapped,id=host0 \
+    -m 2G -smp 2 -nographic
+
+Note on reproducibility: lockdep suppresses repeated warnings for the same
+lock class within a single kernel session.  The warning fires once per fresh
+boot whenever the I/O error path through iomap_finish_folio_read is hit.
+
+===========================================================================
+RUN 1 — 1st fresh QEMU boot
+===========================================================================
+
+[ 347.901474][ C0] I/O error, dev loop0, sector 32760 op 0x0:(READ) flags 0x880700 phys_seg 1 prio class 2
+[ 347.902818][ C0] I/O error, dev loop0, sector 18692 op 0x0:(READ) flags 0x880700 phys_seg 1 prio class 2
+[ 347.903755][ C0]
+[ 347.906189][ C0] ================================
+[ 347.906578][ C0] WARNING: inconsistent lock state
+[ 347.907200][ C0] syzkaller #0 Not tainted
+[ 347.907614][ C0] --------------------------------
+[ 347.907862][ C0] inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+[ 347.908252][ C0] ksoftirqd/0/15 [HC0[0]:SC1[1]:HE1:SE0] takes:
+[ 347.908597][ C0] ffff888025ba5c80 (&sb->s_type->i_lock_key#34){+.?.}-{3:3}, at: igrab+0x2a/0x230
+[ 347.911991][ C0] {SOFTIRQ-ON-W} state was registered at:
+[ 347.912491][ C0]  lock_acquire+0x17c/0x330
+[ 347.912940][ C0]  _raw_spin_lock+0x2e/0x40
+[ 347.913399][ C0]  unlock_new_inode+0x7a/0x330
+[ 347.913758][ C0]  xfs_iget+0x1196/0x30f0
+[ 347.914089][ C0]  xfs_mountfs+0x108c/0x20b0
+[ 347.914460][ C0]  xfs_fs_fill_super+0x153f/0x1f20
+[ 347.914909][ C0]  get_tree_bdev_flags+0x38c/0x620
+[ 347.915222][ C0]  vfs_get_tree+0x92/0x320
+[ 347.915474][ C0]  path_mount+0x7d0/0x23d0
+[ 347.915707][ C0]  __x64_sys_mount+0x293/0x310
+[ 347.915944][ C0]  do_syscall_64+0x106/0xf80
+[ 347.917239][ C0]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 347.917837][ C0] irq event stamp: 556606
+[ 347.918181][ C0] hardirqs last  enabled at (556606): _raw_spin_unlock_irqrestore+0x52/0x80
+[ 347.919192][ C0] hardirqs last disabled at (556605): _raw_spin_lock_irqsave+0x52/0x60
+[ 347.920433][ C0] softirqs last  enabled at (556582): run_ksoftirqd+0x38/0x60
+[ 347.920883][ C0] softirqs last disabled at (556589): run_ksoftirqd+0x38/0x60
+[ 347.921441][ C0]
+[ 347.921441][ C0] other info that might help us debug this:
+[ 347.921733][ C0] Possible unsafe locking scenario:
+[ 347.921733][ C0]
+[ 347.921979][ C0]  CPU0
+[ 347.922224][ C0]  ----
+[ 347.922365][ C0]  lock(&sb->s_type->i_lock_key#34);
+[ 347.922963][ C0]  <Interrupt>
+[ 347.923151][ C0]    lock(&sb->s_type->i_lock_key#34);
+[ 347.923515][ C0]
+[ 347.923515][ C0]  *** DEADLOCK ***
+[ 347.923515][ C0]
+[ 347.923812][ C0] no locks held by ksoftirqd/0/15.
+[ 347.924358][ C0]
+[ 347.924358][ C0] stack backtrace:
+[ 347.925365][ C0] CPU: 0 UID: 0 PID: 15 Comm: ksoftirqd/0 Not tainted syzkaller #0 PREEMPT(full)
+[ 347.925639][ C0] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[ 347.925959][ C0] Call Trace:
+[ 347.926063][ C0]  <TASK>
+[ 347.926177][ C0]  dump_stack_lvl+0x100/0x190
+[ 347.926504][ C0]  print_usage_bug.part.0+0x257/0x340
+[ 347.926641][ C0]  mark_lock+0x74a/0xa20
+[ 347.926771][ C0]  ? do_raw_spin_lock+0x128/0x260
+[ 347.927441][ C0]  __lock_acquire+0x103a/0x2630
+[ 347.928628][ C0]  ? rcu_is_watching+0x12/0xc0
+[ 347.928889][ C0]  ? _raw_spin_unlock_irqrestore+0x52/0x80
+[ 347.929376][ C0]  ? lockdep_hardirqs_on+0x78/0x100
+[ 347.929621][ C0]  ? _raw_spin_unlock_irqrestore+0x3b/0x80
+[ 347.929774][ C0]  lock_acquire+0x17c/0x330
+[ 347.929894][ C0]  ? igrab+0x2a/0x230
+[ 347.930018][ C0]  _raw_spin_lock+0x2e/0x40
+[ 347.930126][ C0]  ? igrab+0x2a/0x230
+[ 347.930230][ C0]  igrab+0x2a/0x230
+[ 347.930337][ C0]  fserror_report+0x3fd/0x750
+[ 347.930458][ C0]  ? __pfx_fserror_report+0x10/0x10
+[ 347.930556][ C0]  ? iomap_finish_folio_read+0xc2/0x2c0
+[ 347.930700][ C0]  ? iomap_finish_folio_read+0xc2/0x2c0
+[ 347.930841][ C0]  ? rcu_is_watching+0x12/0xc0
+[ 347.930981][ C0]  iomap_finish_folio_read+0x168/0x2c0
+[ 347.931900][ C0]  iomap_read_end_io+0x11a/0x430
+[ 347.932392][ C0]  ? __pfx_iomap_read_end_io+0x10/0x10
+[ 347.933022][ C0]  ? __pfx_iomap_read_end_io+0x10/0x10
+[ 347.933416][ C0]  bio_endio+0x755/0x8b0
+[ 347.933826][ C0]  blk_update_request+0x741/0x1330
+[ 347.934162][ C0]  blk_mq_end_request+0x5b/0x420
+[ 347.934347][ C0]  lo_complete_rq+0x1d4/0x2a0
+[ 347.936587][ C0]  blk_complete_reqs+0xb1/0xf0
+[ 347.937498][ C0]  handle_softirqs+0x1ea/0x910
+[ 347.937777][ C0]  ? __pfx_handle_softirqs+0x10/0x10
+[ 347.938002][ C0]  ? __pfx_run_ksoftirqd+0x10/0x10
+[ 347.938389][ C0]  run_ksoftirqd+0x38/0x60
+[ 347.938582][ C0]  smpboot_thread_fn+0x3d3/0xaa0
+[ 347.938731][ C0]  ? kthread+0x13a/0x450
+[ 347.938851][ C0]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[ 347.938961][ C0]  kthread+0x370/0x450
+[ 347.939286][ C0]  ? __pfx_kthread+0x10/0x10
+[ 347.939685][ C0]  ret_from_fork+0x754/0xd80
+[ 347.939839][ C0]  ? __pfx_ret_from_fork+0x10/0x10
+[ 347.940398][ C0]  ? native_load_gs_index+0x1e/0xc0
+[ 347.940618][ C0]  ? __switch_to+0x7b4/0x10c0
+[ 347.940713][ C0]  ? __pfx_kthread+0x10/0x10
+[ 347.940838][ C0]  ret_from_fork_asm+0x1a/0x30
+[ 347.941153][ C0]  </TASK>
+
+===========================================================================
+RUN 2 — 2nd fresh QEMU boot (WARNING fires immediately on first iteration)
+===========================================================================
+
+[ 218.224033][ T5686] loop0: detected capacity change from 32768 to 0
+[ 218.246730][ C1] I/O error, dev loop0, sector 18692 op 0x0:(READ) flags 0x880700 phys_seg 1 prio class 2
+[ 218.248289][ C1]
+[ 218.248619][ C1] ================================
+[ 218.248819][ C1] WARNING: inconsistent lock state
+[ 218.249214][ C1] syzkaller #0 Not tainted
+[ 218.249398][ C1] --------------------------------
+[ 218.249630][ C1] inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+[ 218.249828][ C1] ksoftirqd/1/23 [HC0[0]:SC1[1]:HE1:SE0] takes:
+[ 218.250130][ C1] ffff888025ed3e80 (&sb->s_type->i_lock_key#34){+.?.}-{3:3}, at: igrab+0x2a/0x230
+[ 218.252114][ C1] {SOFTIRQ-ON-W} state was registered at:
+[ 218.252534][ C1]  lock_acquire+0x17c/0x330
+[ 218.252943][ C1]  _raw_spin_lock+0x2e/0x40
+[ 218.253225][ C1]  unlock_new_inode+0x7a/0x330
+[ 218.253450][ C1]  xfs_iget+0x1196/0x30f0
+[ 218.253708][ C1]  xfs_mountfs+0x108c/0x20b0
+[ 218.253932][ C1]  xfs_fs_fill_super+0x153f/0x1f20
+[ 218.254137][ C1]  get_tree_bdev_flags+0x38c/0x620
+[ 218.254389][ C1]  vfs_get_tree+0x92/0x320
+[ 218.254599][ C1]  path_mount+0x7d0/0x23d0
+[ 218.254803][ C1]  __x64_sys_mount+0x293/0x310
+[ 218.255012][ C1]  do_syscall_64+0x106/0xf80
+[ 218.255247][ C1]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 218.255510][ C1] irq event stamp: 561826
+[ 218.268508][ C1]  </IRQ>
+[ 218.268572][ C1]  <TASK>
+[ 218.268648][ C1]  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+[ 218.268815][ C1]  [call trace same as Run 1 — omitted for brevity]
+[ 218.274581][ C1]  </TASK>

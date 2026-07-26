@@ -1,0 +1,39 @@
+# --- Materiale sotto disclosure coordinata: NON committare ---
+# Questi file nominano vendor e modelli reali di vulnerabilita' non ancora
+# divulgate. Nel portfolio va solo la versione redatta per classi, in
+# iot_systems/security_assessment/methodology_and_findings.md
+iot_systems/course_summary.pdf
+iot_systems/theory_deep_dive.pdf
+iot_systems/presentazione.pdf
+iot_systems/presentation*.pdf
+# Paper di terze parti (ACM), non redistribuibile
+iot_systems/lorawan_security_seminar.pdf
+iot_systems/**/vendor_assessment/
+iot_systems/**/evidence/
+iot_systems/**/network_captures/
+iot_systems/**/scans/
+iot_systems/**/*.pcap
+iot_systems/**/*.mp4
+iot_systems/**/config.py
+iot_systems/**/devices/
+
+# Segreti
+.env
+*.env
+!.env.example
+
+# Kernel tree (5.7 GB, non appartiene al portfolio)
+kernel_hacking/**/xfs-linux/
+
+# Corrispondenza con i docenti
+**/bozza-mail-prof.md
+**/risposta*-prof*.txt
+**/professor_email_requirements.md
+
+# Rumore di sistema e tooling
+.DS_Store
+**/.DS_Store
+**/.claude/
+**/.venv/
+**/venv/
+**/__pycache__/
