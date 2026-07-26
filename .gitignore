@@ -37,3 +37,8 @@ kernel_hacking/**/xfs-linux/
 **/.venv/
 **/venv/
 **/__pycache__/
+
+# Artefatti di build ROS/CMake
+**/build/
+**/devel/
+**/install/
