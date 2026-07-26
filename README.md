@@ -18,6 +18,7 @@ written reports. Security course *labs* live in standalone repositories, listed 
 | Course | CFU | Grade | What's inside |
 |---|---|---|---|
 | [Kernel Hacking](./kernel_hacking/) | 6 | **30/30 cum laude** | Two upstream Linux patches — an XFS lockdep fix for a syzkaller bug, and a WireGuard KCSAN data race — with the assembly-level analysis behind them |
+| [IoT Systems](./iot_systems/) | 6 | **30/30 cum laude** | Course theory in Typst, and a redacted security assessment of 13 consumer IoT devices — 26 findings grouped by vulnerability class |
 | [Computer Security](./computer_security/) | 9 | **30/30 cum laude** | 109-page course handbook, exam questions, buffer overflow / SQLi / XSS labs |
 | [Distributed Systems](./distributed_systems/) | 9 | **30/30** | Full theory notes + **DTIP**, a P2P threat intelligence platform in Java RMI |
 | [Privacy & Data Protection](./privacy_data_protection/) | 6 | **30/30** | GDPR, DPIA, cybercrime notes and a regulatory quick-reference table |
@@ -30,7 +31,6 @@ written reports. Security course *labs* live in standalone repositories, listed 
 | Course | CFU | Grade | Where it lives |
 |---|---|---|---|
 | Sviluppo di Software Sicuro | 9 | **30/30** | [secure-software-development](https://github.com/NoFlyFre/secure-software-development) |
-| IoT Systems | 6 | **30/30 cum laude** | Project material held back pending a coordinated vulnerability disclosure |
 | Metodologie di Sviluppo Software | 6 | **30/30** | No archived material |
 | High Performance Computing | 9 | **27/30** | No archived material |
 
@@ -53,6 +53,12 @@ Six graded assignments in C++ and Python: a Frenet trajectory planner with stati
 an MPC controller benchmarked against Pure Pursuit and Stanley at up to 25 m/s, a PCL/RANSAC Euclidean
 clustering pipeline for LiDAR object detection, a Kalman Filter multi-object tracker, and a Particle
 Filter localiser running on ROS.
+
+**[IoT Systems — home network security assessment](./iot_systems/)**
+Twenty-six findings across thirteen consumer IoT devices, every one of them scored `AV:A/AC:L/PR:N` —
+adjacent network, no privileges, no user interaction. One device family is under coordinated disclosure
+with the manufacturer's PSIRT, so what's published here is a redacted rewrite organised by
+vulnerability class rather than by product.
 
 **[Computer Security](./computer_security/)**
 A handbook I wrote covering the entire course — from CVE/CVSS classification and memory corruption
